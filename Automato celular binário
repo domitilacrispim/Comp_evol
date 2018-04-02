@@ -1,0 +1,45 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+#include <string.h>
+	
+int main (){
+	
+	int *ac, *regra, raio, tam_ac, tam_re, tes, *aux, aux_2;
+	printf("Entre com o tamanho do reticulo\n");
+	scanf("%d",  &tam_ac);
+	ac =(int*) malloc ( tam_ac*sizeof(int) );
+	aux =(int*) malloc ( tam_ac*sizeof(int) );
+	printf("Entre com o raio da regra\n");
+	scanf("%d",  &raio);
+	
+	regra = (int*)malloc ( pow(2,2*raio+1)*sizeof(int) );
+	printf("Entre com a configuracao inicial do reticulo\n");
+	for ( int i=0; i<tam_ac; i++){
+		scanf("%d", &ac[i]);	
+	}
+	printf("Entre com a regra\n");
+	for ( int i=0; i<pow(2,2*raio+1); i++){
+		scanf("%d", &regra[i]);	
+	}
+	while(1){
+		printf("Deseja ver a proxima geracao? Digite 1.\n");
+		scanf("%d", &tes);
+		if(tes!=1) break;	
+		memset(aux, 0, sizeof(aux));
+		for ( int i=0; i<tam_ac; i++){
+			for( int j=raio*(-1); j<=raio; j++){
+				aux_2=j+i;
+				if((j+i)<0) aux_2=tam_ac+j;
+				aux_2=aux_2%tam_ac;
+				aux[i]=aux[i]+ac[aux_2]*pow(2,abs(j-raio));
+			}
+			aux[i]=regra[aux[i]];			
+		}
+		for(int i=0; i<tam_ac; i++){
+			ac[i]=aux[i];
+			printf("%d ", ac[i]);		
+		}
+	}
+		
+}
